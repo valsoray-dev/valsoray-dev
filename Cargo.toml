@@ -3,6 +3,10 @@ name = "valsoray-dev"
 version = "1.0.0"
 edition = "2021"
 
+[[bin]]
+name = "valsoray-dev"
+path = "src/main.rs"
+
 [dependencies]
 actix-files = "0.6"
 actix-web = { version = "4.4", default-features = false, features = ["macros"] }

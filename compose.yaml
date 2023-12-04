@@ -1,0 +1,9 @@
+services:
+  website:
+    env_file:
+      - .env
+    build:
+      context: .
+      target: runner
+    ports:
+      - ${PORT}:${PORT}
