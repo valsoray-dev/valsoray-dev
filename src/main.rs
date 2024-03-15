@@ -30,7 +30,7 @@ async fn admin(req: HttpRequest) -> impl Responder {
 }
 
 #[actix_web::main]
-async fn main() -> std::io::Result<()> {
+async fn main() -> Result<(), std::io::Error> {
     pretty_env_logger::formatted_builder()
         .parse_filters(&dotenvy::var("RUST_LOG").unwrap_or("info".to_string()))
         .init();
