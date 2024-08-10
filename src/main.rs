@@ -8,14 +8,15 @@ use log::info;
 
 #[get("/")]
 async fn index() -> impl Responder {
-    let path = "./assets/index.html";
+    let path = "assets/index.html";
     NamedFile::open_async(path).await
 }
 
 #[get("/admin")]
 async fn admin(req: HttpRequest) -> impl Responder {
+    // if HTMX header not present, return 404 error
     if !req.headers().contains_key("hx-request") {
-        let path = "./assets/404.jpg";
+        let path = "assets/404.jpg";
         return NamedFile::open_async(path)
             .await
             .unwrap()
@@ -40,6 +41,7 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(|| {
         App::new()
+            .wrap(middleware::Compress::default())
             .service(index)
             .service(admin)
             .service(Files::new("/", "./assets").prefer_utf8(true))

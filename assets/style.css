@@ -3,16 +3,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap");
 
 :root {
-    /*  change this for scaling  */
+    /* Change this for scaling */
     --m: 4rem;
 
-    --red: #FF6565;
-    --pink: #FF64F9;
-    --purple: #6B5FFF;
-    --blue: #4D8AFF;
-    --green: #5BFF89;
-    --yellow: #FFEE55;
-    --orange: #FF6D1B;
+    --red: #ff6565;
+    --pink: #ff64f9;
+    --purple: #6b5fff;
+    --blue: #4d8aff;
+    --green: #5bff89;
+    --yellow: #ffee55;
+    --orange: #ff6d1b;
+
+    --gradient-colors: var(--orange), var(--yellow), var(--green), var(--blue), var(--purple), var(--pink), var(--red);
 }
 
 body {
@@ -28,7 +30,7 @@ body {
 button {
     border: calc(0.08 * var(--m)) solid transparent;
     position: relative;
-    color: #F3F3F3;
+    color: #f3f3f3;
     font-family: "Space Grotesk";
     font-size: var(--m);
     border-radius: calc(0.7 * var(--m));
@@ -37,7 +39,9 @@ button {
     justify-content: center;
     cursor: pointer;
 
-    background: linear-gradient(#121213, #121213), linear-gradient(#121213 50%, rgba(18, 18, 19, 0.6) 80%, rgba(18, 18, 19, 0)), linear-gradient(90deg, var(--orange), var(--yellow), var(--green), var(--blue), var(--purple), var(--pink), var(--red));
+    background: linear-gradient(#121213, #121213),
+        linear-gradient(#121213 50%, rgba(18, 18, 19, 0.6) 80%, rgba(18, 18, 19, 0)),
+        linear-gradient(90deg, var(--gradient-colors));
     background-origin: border-box;
     background-clip: padding-box, border-box, border-box;
     background-size: 200%;
@@ -46,7 +50,7 @@ button {
 
 button::before {
     content: "";
-    background: linear-gradient(90deg, var(--orange), var(--yellow), var(--green), var(--blue), var(--purple), var(--pink), var(--red));
+    background: linear-gradient(90deg, var(--gradient-colors));
     height: 30%;
     width: 85%;
     position: absolute;
@@ -58,19 +62,27 @@ button::before {
 }
 
 button:hover {
-    animation: animate 2s infinite linear, shadow-in .4s forwards;
+    animation:
+        animate 2s infinite linear,
+        shadow-in 0.4s forwards;
 }
 
 @keyframes animate {
-    0% {background-position: 0}
-
-    100% {background-position: 200%}
+    0% {
+        background-position: 0;
+    }
+    100% {
+        background-position: 200%;
+    }
 }
 
 @keyframes shadow-in {
-    0% {box-shadow: 0 0 0 white}
-
-    100% {box-shadow: 0 0 15px white}
+    0% {
+        box-shadow: 0 0 0 white;
+    }
+    100% {
+        box-shadow: 0 0 15px white;
+    }
 }
 
 @media screen and (max-width: 1000px) {
