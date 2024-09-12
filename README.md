@@ -21,11 +21,19 @@ Because of this, not a single line of JavaScript is used in this project. (TypeS
    cargo run
    ```
 
-3. Or by using `docker compose`:
+3. Or by using Docker:
 
-    ```bash
-    docker compose up --build
-    ```
+   - Build the Docker image:
+
+     ```bash
+     docker build -t valsoray-dev .
+     ```
+
+   - Run the container:
+
+     ```bash
+     docker run -d --rm --name valsoray-dev -p 8080:8080 valsoray-dev
+     ```
 
 ## License
 

@@ -1,33 +1,26 @@
-use actix_files::{Files, NamedFile};
+use actix_files::Files;
 use actix_web::{
-    get,
-    http::{header::ContentType, StatusCode},
-    middleware, App, HttpRequest, HttpResponse, HttpServer, Responder,
+    get, http::header::ContentType, middleware, web::Html, App, HttpRequest, HttpResponse,
+    HttpServer, Responder,
 };
 use log::info;
 
 #[get("/")]
 async fn index() -> impl Responder {
-    let path = "assets/index.html";
-    NamedFile::open_async(path).await
+    Html::new(include_str!("../assets/index.html"))
 }
 
 #[get("/admin")]
 async fn admin(req: HttpRequest) -> impl Responder {
     // if HTMX header not present, return 404 error
     if !req.headers().contains_key("hx-request") {
-        let path = "assets/404.jpg";
-        return NamedFile::open_async(path)
-            .await
-            .unwrap()
-            .into_response(&req)
-            .customize()
-            .with_status(StatusCode::NOT_FOUND);
+        return HttpResponse::NotFound()
+            .content_type(ContentType::jpeg())
+            .body(&include_bytes!("../assets/404.jpg")[..]);
     }
     HttpResponse::Ok()
         .content_type(ContentType::html())
         .body("<video src='/rickroll.mp4' autoplay loop style='width: 100%; height: 100%'></video>")
-        .customize()
 }
 
 #[actix_web::main]
@@ -36,7 +29,7 @@ async fn main() -> std::io::Result<()> {
         .parse_filters(&dotenvy::var("RUST_LOG").unwrap_or("info".to_string()))
         .init();
 
-    let port = dotenvy::var("PORT").expect("PORT must be set");
+    let port = dotenvy::var("PORT").unwrap_or("8080".to_string());
     info!("Server is running at http://localhost:{}", port);
 
     HttpServer::new(|| {
