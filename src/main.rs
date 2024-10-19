@@ -10,8 +10,8 @@ async fn index() -> impl Responder {
     Html::new(include_str!("../assets/index.html"))
 }
 
-#[get("/admin")]
-async fn admin(req: HttpRequest) -> impl Responder {
+#[get("/blog")]
+async fn rickroll(req: HttpRequest) -> impl Responder {
     // if HTMX header not present, return 404 error
     if !req.headers().contains_key("hx-request") {
         return HttpResponse::NotFound()
@@ -35,10 +35,12 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .wrap(middleware::Compress::default())
+            .wrap(middleware::Logger::new(
+                "%r [%s] | Time: [%T] | \"%{User-Agent}i\"",
+            ))
             .service(index)
-            .service(admin)
+            .service(rickroll)
             .service(Files::new("/", "./assets").prefer_utf8(true))
-            .wrap(middleware::Logger::new("%a | %r [%s] | Time: [%T]"))
     })
     .bind(("0.0.0.0", port.parse::<u16>().unwrap()))?
     .run()
