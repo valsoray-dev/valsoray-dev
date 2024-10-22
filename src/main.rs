@@ -1,7 +1,10 @@
 use actix_files::Files;
 use actix_web::{
-    get, http::header::ContentType, middleware, web::Html, App, HttpRequest, HttpResponse,
-    HttpServer, Responder,
+    get,
+    http::header::{ContentType, CONTENT_LOCATION},
+    middleware,
+    web::Html,
+    App, HttpRequest, HttpResponse, HttpServer, Responder,
 };
 use log::info;
 
@@ -16,6 +19,7 @@ async fn rickroll(req: HttpRequest) -> impl Responder {
     if !req.headers().contains_key("hx-request") {
         return HttpResponse::NotFound()
             .content_type(ContentType::jpeg())
+            .insert_header((CONTENT_LOCATION, "https://http.cat/404.jpg"))
             .body(&include_bytes!("../assets/404.jpg")[..]);
     }
     HttpResponse::Ok()
