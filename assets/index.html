@@ -1,14 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="valsoray-dev's personal website" />
+
         <title>valsoray.dev</title>
-        <link rel="me" href="https://github.com/valsoray-dev" type="text/html">
+        <meta name="description" content="valsoray-dev's personal website" />
+        <link rel="me" href="https://github.com/valsoray-dev" type="text/html" />
 
         <!-- Disable DarkReader -->
-        <meta name="darkreader-lock">
+        <meta name="darkreader-lock" />
 
         <!-- Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,12 +17,12 @@
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap" rel="stylesheet" />
 
         <link href="style.css" rel="stylesheet" />
-        <script src="htmx.min.js"></script>
     </head>
 
     <body>
         <button type="button" hx-get="/blog" hx-swap="outerHTML">
             What a fancy button!
         </button>
+        <script src="htmx.min.js" async></script>
     </body>
 </html>
