@@ -17,12 +17,12 @@
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap" rel="stylesheet" />
 
         <link href="style.css" rel="stylesheet" />
+        <script defer src="htmx.min.js"></script>
     </head>
 
     <body>
         <button type="button" hx-get="/blog" hx-swap="outerHTML">
             What a fancy button!
         </button>
-        <script src="htmx.min.js" async></script>
     </body>
 </html>
