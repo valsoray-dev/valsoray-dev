@@ -22,9 +22,19 @@ async fn rickroll(req: HttpRequest) -> impl Responder {
             .insert_header((CONTENT_LOCATION, "https://http.cat/404.jpg"))
             .body(&include_bytes!("../assets/404.jpg")[..]);
     }
-    HttpResponse::Ok()
-        .content_type(ContentType::html())
-        .body("<video src='/rickroll.mp4' autoplay loop style='width: 100%; height: 100%'></video>")
+    HttpResponse::Ok().content_type(ContentType::html()).body(
+        r#"<video src="/rickroll.mp4" autoplay loop style="width: 100%; height: 100%"></video>
+        <script>
+            const stop = (e) => {e.preventDefault();e.stopPropagation();}
+            document.documentElement.requestFullscreen();
+            document.addEventListener("keydown", e => {
+                const isRefresh = e.key === "F5" || ((e.ctrlKey || e.metaKey) && e.key === "r");
+                if (isRefresh) stop(e);
+            });
+            document.addEventListener("contextmenu", e => stop(e));
+            window.addEventListener("beforeunload", e => stop(e));
+        </script>"#,
+    )
 }
 
 #[actix_web::main]
